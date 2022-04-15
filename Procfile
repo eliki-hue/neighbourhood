@@ -1,0 +1,1 @@
+web: gunicorn rateit.wsgi --log-file -
