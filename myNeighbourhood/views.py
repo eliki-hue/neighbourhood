@@ -81,3 +81,14 @@ def add_post(request):
         form = BusinessForm()
 
         return render(request, 'add_post.html', {'form':form})
+
+def add_neighbourhood(request):
+    if request.method =='POST':
+        form = NeighbourHodForm(request.Post)
+        if form.is_valid():
+            form.save()
+    
+    else:
+        form = NeighbourHodForm()
+        return render(request, 'add_neighbourhood.html', {'form':form})
+

@@ -8,8 +8,8 @@ urlpatterns=[
     path('my_profile', views.profile_display, name='profile_display'),
     path('update_profile', views.profile_update, name='profile_update'),
     path('my_post', views.add_post, name='my_post'),
-    path('add_business', views.add_comment, name='add_business'),
-    path('add_neighbourhood', views.add_comment, name='add_neighbourhood'),
+    path('add_business', views.add_business, name='add_business'),
+    path('add_neighbourhood', views.add_, name='add_neighbourhood'),
     
     
 ]
