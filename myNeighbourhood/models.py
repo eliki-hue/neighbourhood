@@ -27,7 +27,7 @@ class NeighbourHood(models.Model):
         return cls.objects.filter(id=neighborhood_id)
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=0, related_name='profile')
     username = models.CharField(max_length=20)
     useremail = models.EmailField(max_length=30)
     bio = models.CharField(max_length=100)
