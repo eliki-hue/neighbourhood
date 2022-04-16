@@ -2,7 +2,7 @@
 {% load bootstrap3 %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'home' %}">RateIt</a>
+    <a class="navbar-brand" href="{% url 'home' %}">Neighbourhood</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -15,20 +15,20 @@
           <button>
           <a class="nav-link" href="/accounts/login/">login</a>
           </button>
-          <button>
+          <!-- <button>
           <a class="nav-link" href="/accounts/register/">Register</a>
+          </button> -->
+          <button>
+          <a class="nav-link" href="/add_neighbourhood">Add neighbourhood</a>
           </button>
           <button>
-          <a class="nav-link" href="/add_neighbourhood">Profile</a>
-          </button>
-          <button>
-          <a class="nav-link" href="/add_business">  Post Project</a>
+          <a class="nav-link" href="/add_business">  Add Business</a>
           </button>
           <button>
           <a class="nav-link" href="/my_profile">Profile</a>
           </button>
           <button>
-          <a class="nav-link" href="/my_post">  Post Project</a>
+          <a class="nav-link" href="/my_post"> Add Post </a>
           </button>
           <button>
             <a class="nav-link" href="/accounts/logout/">logout</a>

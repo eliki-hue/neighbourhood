@@ -5,7 +5,7 @@ from django.contrib.auth import login, authenticate
 from django.http import JsonResponse, Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .forms import ProfileForm, NeighbourHodForm, PostForm, BusinessForm
+from .forms import ProfileForm, NeighbourHoodForm, PostForm, BusinessForm
 
 # Create your views here.
 @login_required(login_url='/accounts/login/')
@@ -14,7 +14,7 @@ def home(request):
     message ="Select your Neighbourhoods"
     
 
-    return render(request,'index.html',{'neighbourhood': neighbourHood, 'message': message})
+    return render(request,'index.html',{'neighbourhoods': neighbourHood, 'message': message})
 
 
 @login_required(login_url='/accounts/login/')
@@ -84,12 +84,13 @@ def add_post(request):
 
 def add_neighbourhood(request):
     if request.method =='POST':
-        form = NeighbourHodForm(request.Post)
+        form = NeighbourHoodForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            return redirect(home)
     
     else:
-        form = NeighbourHodForm()
+        form = NeighbourHoodForm()
         return render(request, 'add_neighbourhood.html', {'form':form})
 
 def search_results(request):
@@ -98,15 +99,15 @@ def search_results(request):
         search_term = request.GET.get("search_term")
         try:
             searched_result = NeighbourHood.search(search_term)
-            message = f"Found searched project by title {search_term}"
+            message = f"Found searched neighbourhood {search_term}"
         except NeighbourHood.DoesNotExist:
-             message="No project with that title please try a different title."
+             message="No neighbourhood with that name try a different name."
              return render(request, 'NotFound.html',{'message':message})
 
 
         return render(request, 'search.html',{'message':message,"search_result": searched_result})
 
     else:
-        message = "You haven't searched for any category"
+        message = "You haven't searched for any Neighbourhood"
         return render(request, 'search.html',{"message":message})
 

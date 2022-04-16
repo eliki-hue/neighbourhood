@@ -11,7 +11,7 @@ class ProfileForm(forms.ModelForm):
         exclude=['username']
         fields ='__all__'
 
-class NeighbourHodForm(forms.ModelForm):
+class NeighbourHoodForm(forms.ModelForm):
     class Meta:
         model = NeighbourHood
         

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+<h1><strong>Add Neighbourhood</strong></h1>
+<div class="container">
+    <form  action="{%url 'add_neighbourhood'%}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+        {% bootstrap_form form %}
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="post">
+        </div>
+    </form>
+</div>
+{% endblock %}

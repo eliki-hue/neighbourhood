@@ -10,6 +10,6 @@ urlpatterns=[
     path('my_post', views.add_post, name='my_post'),
     path('add_business', views.add_business, name='add_business'),
     path('add_neighbourhood', views.add_neighbourhood, name='add_neighbourhood'),
-    
+    path('search/', views.search_results, name='search_results'),
     
 ]

@@ -26,5 +26,5 @@ urlpatterns = [
     path('logout/', views.LogoutView.as_view(), {"next_page": '/'}), 
     path('login', views.redirect_to_login,{"next_page": 'home'}),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('search/', views.search_results, name='search_results'),
+    
 ]
