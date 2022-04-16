@@ -92,3 +92,21 @@ def add_neighbourhood(request):
         form = NeighbourHodForm()
         return render(request, 'add_neighbourhood.html', {'form':form})
 
+def search_results(request):
+
+    if 'search_term' in request.GET and request.GET["search_term"]:
+        search_term = request.GET.get("search_term")
+        try:
+            searched_result = NeighbourHood.search(search_term)
+            message = f"Found searched project by title {search_term}"
+        except NeighbourHood.DoesNotExist:
+             message="No project with that title please try a different title."
+             return render(request, 'NotFound.html',{'message':message})
+
+
+        return render(request, 'search.html',{'message':message,"search_result": searched_result})
+
+    else:
+        message = "You haven't searched for any category"
+        return render(request, 'search.html',{"message":message})
+

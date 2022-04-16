@@ -21,10 +21,10 @@ from django.contrib.auth import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('neigh', include('myNeighbourhood.urls')),
+    path('', include('myNeighbourhood.urls')),
     path('accounts/', include('registration.backends.simple.urls')),
     path('logout/', views.LogoutView.as_view(), {"next_page": '/'}), 
-    path('', views.redirect_to_login),
+    path('login', views.redirect_to_login,{"next_page": 'home'}),
     path('accounts/', include('django.contrib.auth.urls')),
-   
+    path('search/', views.search_results, name='search_results'),
 ]
