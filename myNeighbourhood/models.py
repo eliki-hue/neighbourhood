@@ -4,13 +4,37 @@ from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 # Create your models here.
 
+class NeighbourHood(models.Model):
+    name = models.CharField(max_length=50)
+    location = models.CharField(max_length=60)
+    admin = models.ForeignKey("Profile", on_delete=models.CASCADE, related_name='hood')
+    hood_logo =  CloudinaryField('image')
+    description = models.TextField()
+    health_tell = models.IntegerField(null=True, blank=True)
+    police_number = models.IntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.name} name'
+
+    def create_neighborhood(self):
+        self.save()
+
+    def delete_neighborhood(self):
+        self.delete()
+
+    @classmethod
+    def find_neighborhood(cls, neighborhood_id):
+        return cls.objects.filter(id=neighborhood_id)
+
 class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     username = models.CharField(max_length=20)
     useremail = models.EmailField(max_length=30)
-    userage = models.CharField(max_length=2)
     bio = models.CharField(max_length=100)
     profile_image = CloudinaryField('images', null=True)
-    user_password = models.CharField(max_length=15)
+    location = models.CharField(max_length=50, blank=True, null=True)
+    neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.SET_NULL, null=True, related_name='members', blank=True)
+   
     def __str__(self):
         return self.username
 
@@ -24,24 +48,29 @@ class Profile(models.Model):
         Profile.objects.filter(username=old_user).update(name=new_user)
         self.save()
 
-class NeighbourHood(models.Model):
-    name = models.CharField(max_length=50)
-    location = models.CharField(max_length=60)
-    admin = models.ForeignKey("Profile", on_delete=models.CASCADE, related_name='hood')
-    hood_logo =  CloudinaryField('image')
-    description = models.TextField()
-    health_tell = models.IntegerField(null=True, blank=True)
-    police_number = models.IntegerField(null=True, blank=True)
+class Business(models.Model):
+    name = models.CharField(max_length=120)
+    email = models.EmailField(max_length=254)
+    description = models.TextField(blank=True)
+    neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, related_name='business')
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='owner')
 
     def __str__(self):
-        return f'{self.name} hood'
+        return f'{self.name} name'
 
-    def create_neighborhood(self):
+    def create_business(self):
         self.save()
 
-    def delete_neighborhood(self):
+    def delete_business(self):
         self.delete()
 
     @classmethod
-    def find_neighborhood(cls, neighborhood_id):
-        return cls.objects.filter(id=neighborhood_id)
+    def search_business(cls, name):
+        return cls.objects.filter(name__icontains=name).all()
+
+class Post(models.Model):
+    title = models.CharField(max_length=100, null=True)
+    post = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='post_author')
+    hood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, related_name='hood_post')
