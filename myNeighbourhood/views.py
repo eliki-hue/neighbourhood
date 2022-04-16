@@ -70,3 +70,14 @@ def add_business(request):
         form = BusinessForm()
 
         return render(request, 'add_business.html', {'form':form})
+
+def add_post(request):
+    if request.method =='POST':
+        form = BusinessForm(request.Post)
+        if form.is_valid():
+            form.save()
+    
+    else:
+        form = BusinessForm()
+
+        return render(request, 'add_post.html', {'form':form})
