@@ -59,3 +59,14 @@ def profile_display(request):
    
 
     return render(request, 'profiledisplay.html',{'profile':profile})
+
+def add_business(request):
+    if request.method =='POST':
+        form = BusinessForm(request.Post)
+        if form.is_valid():
+            form.save()
+    
+    else:
+        form = BusinessForm()
+
+        return render(request, 'add_business.html', {'form':form})
