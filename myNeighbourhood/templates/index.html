@@ -1,0 +1,56 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="container">
+    <div class="row header" style="height: 40%;;">
+      <img src="{% static 'media/bg.jpg' %}" style="height: 50vh;width: 100%;" alt="">
+    </div><br><br>
+    <div class="row">
+      <div  style="font-family: 'Kavivanar', cursive;">
+        <div class="container">
+            <div class="row">
+                {% for neighbourhood in neighbourhoods %}
+                <div class="col-sm-12 col-md-4 col-lg-3"style="font-family: 'Kavivanar', cursive;">
+                    <div class="card">
+                        <div class="card-body">
+                            <div style="text-align:center;"></div>
+                            <a href=""> 
+                              <form action="{%url 'project_details' project.pk%}">
+                                {% csrf_token %}
+                               <button value="{{neighbourhood.id}}" name="neighbourhood.id" class="btn btn-sm btn-success" > <img src="{{neighbourhood.hood_logo.url}}" height="auto" width="100%" alt="mascot"></div> <i class="fa fa-thumbs-up" ></i></button> 
+                               </a>
+                        
+                              </form>
+                                
+                        
+                        <div class="overlay">
+                            <p style="font-size:15px;">
+                              
+                            
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+</body>
+</html>
+   
+      
+    
+
+
