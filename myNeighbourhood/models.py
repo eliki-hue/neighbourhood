@@ -4,10 +4,11 @@ from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 # Create your models here.
 
+
 class NeighbourHood(models.Model):
     name = models.CharField(max_length=50)
     location = models.CharField(max_length=60)
-    admin = models.ForeignKey("Profile", on_delete=models.CASCADE, related_name='hood')
+    admin = models.ForeignKey(User, on_delete=models.CASCADE)
     hood_logo =  CloudinaryField('image')
     description = models.TextField()
     health_tell = models.IntegerField(null=True, blank=True)
@@ -27,8 +28,8 @@ class NeighbourHood(models.Model):
         return cls.objects.filter(id=neighborhood_id)
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, default=0, related_name='profile')
-    username = models.CharField(max_length=20)
+    username = models.OneToOneField(User, on_delete=models.CASCADE, default=0, related_name='profile')
+    # username = models.CharField(max_length=20)
     useremail = models.EmailField(max_length=30)
     bio = models.CharField(max_length=100)
     profile_image = CloudinaryField('images', null=True)
@@ -53,10 +54,10 @@ class Business(models.Model):
     email = models.EmailField(max_length=254)
     description = models.TextField(blank=True)
     neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, related_name='business')
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='owner')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner')
 
     def __str__(self):
-        return f'{self.name} name'
+        return self.name
 
     def create_business(self):
         self.save()
@@ -72,5 +73,5 @@ class Post(models.Model):
     title = models.CharField(max_length=100, null=True)
     post = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='post_author')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post_author')
     hood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, related_name='hood_post')

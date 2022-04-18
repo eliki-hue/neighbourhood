@@ -1,8 +1,10 @@
+from email import message
 from urllib import response
 from django.shortcuts import redirect, render,HttpResponseRedirect
 from .models import NeighbourHood, Profile, Business, Post
 from django.contrib.auth import login, authenticate
 from django.http import JsonResponse, Http404
+from django.contrib.auth.models import User 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import ProfileForm, NeighbourHoodForm, PostForm, BusinessForm
@@ -60,28 +62,47 @@ def profile_display(request):
 
     return render(request, 'profiledisplay.html',{'profile':profile})
 
+@login_required(login_url='/accounts/login/')
 def add_business(request):
+    current_user = request.user
     if request.method =='POST':
-        form = BusinessForm(request.Post)
+        form = BusinessForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            return redirect(home)
     
     else:
         form = BusinessForm()
-
         return render(request, 'add_business.html', {'form':form})
+    return redirect('home')
 
+@login_required(login_url='/accounts/login/')
 def add_post(request):
     if request.method =='POST':
-        form = BusinessForm(request.Post)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            new_post=form.save(commit=False)
+            author= request.user
+            usercheck = User.objects.get(username =author)
+            # new_post.user = usercheck.username
+            # new_post.user = author
+            belonging =Profile.objects.get(username=author)
+            if belonging.neighbourhood:
+                new_post.neighbourhood= belonging.neighbourhood
+                
+                new_post.save()
+            else:
+                message ="You can't post because you don't belong to any Neighbourhood"
+                return render(request,'NotFound.html', {"message":message})
+
     
     else:
-        form = BusinessForm()
+        form = PostForm()
 
         return render(request, 'add_post.html', {'form':form})
+    return redirect('home')
 
+@login_required(login_url='/accounts/login/')
 def add_neighbourhood(request):
     if request.method =='POST':
         form = NeighbourHoodForm(request.POST, request.FILES)
@@ -93,6 +114,7 @@ def add_neighbourhood(request):
         form = NeighbourHoodForm()
         return render(request, 'add_neighbourhood.html', {'form':form})
 
+@login_required(login_url='/accounts/login/')
 def search_results(request):
 
     if 'search_term' in request.GET and request.GET["search_term"]:
