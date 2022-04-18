@@ -66,12 +66,17 @@ def profile_display(request):
 def add_business(request):
     current_user = request.user
     if request.method =='POST':
+        print('received')
         form = BusinessForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            print('saved successfully')
             return redirect(home)
+        else:
+            print('not not saved')
     
     else:
+        print('get request')
         form = BusinessForm()
         return render(request, 'add_business.html', {'form':form})
     return redirect('home')
@@ -79,22 +84,12 @@ def add_business(request):
 @login_required(login_url='/accounts/login/')
 def add_post(request):
     if request.method =='POST':
+        
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
-            new_post=form.save(commit=False)
-            author= request.user
-            usercheck = User.objects.get(username =author)
-            # new_post.user = usercheck.username
-            # new_post.user = author
-            belonging =Profile.objects.get(username=author)
-            if belonging.neighbourhood:
-                new_post.neighbourhood= belonging.neighbourhood
-                
-                new_post.save()
-            else:
-                message ="You can't post because you don't belong to any Neighbourhood"
-                return render(request,'NotFound.html', {"message":message})
-
+            form.save()
+           
+            print('post saved successfully')
     
     else:
         form = PostForm()
@@ -120,16 +115,18 @@ def search_results(request):
     if 'search_term' in request.GET and request.GET["search_term"]:
         search_term = request.GET.get("search_term")
         try:
-            searched_result = NeighbourHood.search(search_term)
-            message = f"Found searched neighbourhood {search_term}"
-        except NeighbourHood.DoesNotExist:
-             message="No neighbourhood with that name try a different name."
+            searched_result = Business.search_business(search_term)
+            message = f"Found searched business {search_term}"
+            count=search_results.count()
+            print(count)
+        except Business.DoesNotExist:
+             message="No business with that name try a different name."
              return render(request, 'NotFound.html',{'message':message})
 
 
         return render(request, 'search.html',{'message':message,"search_result": searched_result})
 
     else:
-        message = "You haven't searched for any Neighbourhood"
+        message = "You haven't searched for any Business"
         return render(request, 'search.html',{"message":message})
 

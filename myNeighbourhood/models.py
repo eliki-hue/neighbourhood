@@ -27,6 +27,10 @@ class NeighbourHood(models.Model):
     def find_neighborhood(cls, neighborhood_id):
         return cls.objects.filter(id=neighborhood_id)
 
+    @classmethod
+    def members_count(cls):
+        return cls.id.count()
+
 class Profile(models.Model):
     username = models.OneToOneField(User, on_delete=models.CASCADE, default=0, related_name='profile')
     # username = models.CharField(max_length=20)
@@ -67,7 +71,7 @@ class Business(models.Model):
 
     @classmethod
     def search_business(cls, name):
-        return cls.objects.filter(name__icontains=name).all()
+        return cls.objects.filter(name=name).all()
 
 class Post(models.Model):
     title = models.CharField(max_length=100, null=True)
