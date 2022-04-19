@@ -73,13 +73,13 @@
                     <div class="card">
                         <div class="card-body">
                             <div style="text-align:center;"></div>
-                            <a href=""> 
-                              <form action="{% url 'single_neighbourhood' neighbourhood.id %}" >
-                                {% csrf_token %}
-                               <button value="{{neighbourhood.id}}" name="neighbourhood.id" class="btn " > <img src="{{neighbourhood.hood_logo.url}}" height="auto" width="100%" alt="mascot"></div> <i class="fa fa-thumbs-up" ></i></button> 
+                            <a href="{% url 'single_neighbourhood' neighbourhood.id %}"> 
+                              
+                                <img src="{{neighbourhood.hood_logo.url}}" height="auto" width="10%" alt="mascot"></div>
+                            
                                </a>
                         
-                              </form>
+                             
                                 
                               <p>Name: {{neighbourhood.name}}({{neighbourhood.location}})</p>  
                             <p>{{neighbourhood.owner}} </p> 

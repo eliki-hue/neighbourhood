@@ -5,11 +5,44 @@
 
 
 {% block content %}
-<body style="background-image:url('/static/image/index_bg4.jpg'); background-size:cover;background-color: black;background-repeat: no-repeat;">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{neighbourhood.name}}</title>
+</head>
+<body>
   <div class="container">
-    <div class="row header" style="height: 40%;;">
+    <div class="row">
+      <div class="col-sm-3" style="background-color:rgb(148, 231, 152);"><h3>Important contacts</h3>
+        <h5>Health Tel: {{neighbourhood.health_tel}}</h5>
+      <h5>Police Tel: {{neighbourhood.police_number}}</h5>
+      </div>
+      <div class="col-sm-4"><img src="{{neighbourhood.hood_logo.url}}" height="auto" width="100%" alt="mascot">
+      <h5>Name: {{neighbourhood.name}}</h5>
+      <h5>Description: {{neighbourhood.description}}</h5>
+      <br>
+      <h3>Businesses in the area</h3>
+    
+      </div> 
+      <div class="col-sm-5" style="background-color: rgb(130, 168, 135);"><h3>Posts</h3>
+      {% if neighbourhood.hood_post %}
+      {{post.title}}
+      {%endif%}
+
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+</body>
+</html>
+<!-- <body style="background-image:url('/static/image/index_bg4.jpg'); background-size:cover;background-color: black;background-repeat: no-repeat;"> -->
+  <!-- <div class="container">
+    <div class="row header" style="height: 40%;;"> -->
       <!-- <img src="{% static 'image/bg4.jpg' %}" style="height: 50vh;width: 100%;" alt=""> -->
-    </div><br><br>
+    <!-- </div><br><br>
     <div class="row">
       <div  style="font-family: 'Kavivanar', cursive;">
         <div class="container">
@@ -19,10 +52,8 @@
                     <div class="card">
                         <div class="card-body">
                             <div style="text-align:center;"></div>
-                            <a href=""> 
-                              <form action="{% url 'single_neighbourhood' neighbourhood.id %}">
-                                {% csrf_token %}
-                               <button value="{{neighbourhood.id}}" name="neighbourhood.id" class="btn " > <img src="{{neighbourhood.hood_logo.url}}" height="auto" width="100%" alt="mascot"></div> <i class="fa fa-thumbs-up" ></i></button> 
+                           
+                               <div"  > <i class="fa fa-thumbs-up" ></i></button> 
                                </a>
                         
                               </form>
@@ -43,9 +74,9 @@
       </div>
     </div>
   </div>
-  {% endblock %}
+  
 </body>
-</html>
+</html> -->
    
       
     

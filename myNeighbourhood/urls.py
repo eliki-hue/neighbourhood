@@ -11,6 +11,6 @@ urlpatterns=[
     path('add_business', views.add_business, name='add_business'),
     path('add_neighbourhood', views.add_neighbourhood, name='add_neighbourhood'),
     path('search/', views.search_results, name='search_results'),
-    path("neighbourhood/<int:id>", views.single_neighbourhood, name='single_neighbourhood'),
+    path("neighbourhood/<str:pk>/", views.single_neighbourhood, name='single_neighbourhood'),
     
 ]

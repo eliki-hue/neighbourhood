@@ -129,10 +129,10 @@ def search_results(request):
         message = "You haven't searched for any Business"
         return render(request, 'search.html',{"message":message})
 
-def single_neighbourhood(request, id):
+def single_neighbourhood(request, pk):
     
     print('searching....................')
-    belonging=NeighbourHood.objects.filter(id=id)
+    belonging=NeighbourHood.objects.get(id=pk)
     print(belonging)
 
     return render(request, 'home.html',{'neighbourhood':belonging})
