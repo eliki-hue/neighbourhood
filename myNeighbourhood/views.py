@@ -117,8 +117,7 @@ def search_results(request):
         try:
             searched_result = Business.search_business(search_term)
             message = f"Found searched business {search_term}"
-            count=search_results.count()
-            print(count)
+        
         except Business.DoesNotExist:
              message="No business with that name try a different name."
              return render(request, 'NotFound.html',{'message':message})
@@ -129,4 +128,14 @@ def search_results(request):
     else:
         message = "You haven't searched for any Business"
         return render(request, 'search.html',{"message":message})
+
+def single_neighbourhood(request, id):
+    
+    print('searching....................')
+    belonging=NeighbourHood.objects.filter(id=id)
+    print(belonging)
+
+    return render(request, 'home.html',{'neighbourhood':belonging})
+
+
 
