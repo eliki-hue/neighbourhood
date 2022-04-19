@@ -95,7 +95,7 @@ def add_post(request):
         form = PostForm()
 
         return render(request, 'add_post.html', {'form':form})
-    return redirect('home')
+    return redirect('single_neighbourhood')
 
 @login_required(login_url='/accounts/login/')
 def add_neighbourhood(request):
