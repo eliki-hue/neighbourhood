@@ -8,7 +8,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Neighbourhood</title>
 </head>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -68,11 +68,11 @@
                 <div class="card-body">
                     <h5 class="card-title"><p>Name: {{neighbourhood.name}}({{neighbourhood.location}})</p>  <span class="ml-4">{{neighbourhood.members.count}} member{{hood.members.count|pluralize}}</span></h5>
                     <p class="card-text">Description: {{neighbourhood.description}}</p>
-                    {% if request.user.profile.neighbourhood == neighbourhood.name %}
+                    <!-- {% if request.user.profile.neighbourhood == neighbourhood.name %}
                     <a href="" class="btn btn-outline-danger btn-sm">Leave Hood</a>
                     {% elif not request.user.profile.neighbourhood %}
                     <a href="" class="btn btn-success btn-sm">Join Hood</a>
-                    {% endif %}
+                    {% endif %} -->
                 </div>
             </div>
         </div>
