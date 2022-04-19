@@ -15,6 +15,7 @@ def home(request):
     neighbourHood = NeighbourHood.objects.all()
     message ="Select your Neighbourhoods"
     
+    
 
     return render(request,'index.html',{'neighbourhoods': neighbourHood, 'message': message})
 

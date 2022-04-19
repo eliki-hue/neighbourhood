@@ -1,5 +1,5 @@
-{ % extends "base.html"%}
-{ % load bootstrap %}
+
+{% load bootstrap3 %}
 {% load static %}
 
 <!DOCTYPE html>
@@ -10,8 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
-{% load static %}
-{% load bootstrap3 %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <!-- <a class="navbar-brand" href="{% url 'home' %}">Neighbourhood</a> -->
@@ -27,9 +26,7 @@
           <button>
           <a class="nav-link" href="/accounts/login/">login</a>
           </button>
-          <!-- <button>
-          <a class="nav-link" href="/accounts/register/">Register</a>
-          </button> -->
+          
           <button>
           <a class="nav-link" href="/add_neighbourhood">Add neighbourhood</a>
           </button>
@@ -46,9 +43,9 @@
   
             <div class="input-group">
               <input type="text" class="form-control" placeholder="neighbourhood id " name="search_term">
-              <div class="input-group-btn">
+              
                 <button class="btn btn-default" type="submit">  <i class="glyphicon glyphicon-search">search</i></button>
-              </div>
+              
               </div>
       
           </form>
@@ -59,38 +56,42 @@
 </nav>
 
 
-<body style="background-image:url('/static/image/index_bg4.jpg'); background-size:cover;background-color: black;background-repeat: no-repeat;">
+<body style="background-image:url('/static/image/indext_bg4.jpg'); background-size:cover;background-color: bklack;background-repeat: no-repeat;">
   <div class="container">
-    <div class="row header" style="height: 40%;;">
-      <!-- <img src="{% static 'image/bg4.jpg' %}" style="height: 50vh;width: 100%;" alt=""> -->
-    </div><br><br>
     
-      <div  style="font-family: 'Kavivanar', cursive;">
-        <div class="container">
-            <div class="row">
-                {% for neighbourhood in neighbourhoods %}
-                <div class="col-sm-12 col-md-4 col-lg-3"style="font-family: 'Kavivanar', cursive;">
-                    <div class="card">
-                        <div class="card-body">
-                            <div style="text-align:center;"></div>
-                            <a href="{% url 'single_neighbourhood' neighbourhood.id %}"> 
-                              
-                                <img src="{{neighbourhood.hood_logo.url}}" height="auto" width="20%" alt="mascot"></div>
-                            
-                               </a>
-                        
-                             
-                                
-                              <p>Name: {{neighbourhood.name}}({{neighbourhood.location}})</p>  
-                            <p>{{neighbourhood.owner}} </p> 
-                        
-                        
-                        </div>
-                    </div>
+      <div class="row">
+        {% for neighbourhood in neighbourhoods %}
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="card mb-4" style="min-height:340px">
+              <a href="{% url 'single_neighbourhood' neighbourhood.id %}"> <img src="{{neighbourhood.hood_logo.url}}" style="width: 50%;"  class="card-img-top" alt="{{ neighbourhood.name }}"></a>
+                <div class="card-body">
+                    <h5 class="card-title"><p>Name: {{neighbourhood.name}}({{neighbourhood.location}})</p>  <span class="ml-4">{{neighbourhood.members.count}} member{{hood.members.count|pluralize}}</span></h5>
+                    <p class="card-text">Description: {{neighbourhood.description}}</p>
+                    {% if request.user.profile.neighbourhood == neighbourhood.name %}
+                    <a href="" class="btn btn-outline-danger btn-sm">Leave Hood</a>
+                    {% elif not request.user.profile.neighbourhood %}
+                    <a href="" class="btn btn-success btn-sm">Join Hood</a>
+                    {% endif %}
                 </div>
-                {% endfor %}
             </div>
         </div>
+        {% endfor %}
+      </div>
+
+      
+        <!-- {% for neighbourhood in neighbourhoods %}
+        {{neighbourhood.name}}
+
+        <img src="{{neighbourhood.hood_logo.url}}" height="auto" width="10%" alt="mascot">
+     
+     </form>
+       
+     <p>Name: {{neighbourhood.name}}({{neighbourhood.location}})</p>  
+   <p>{{neighbourhood.owner}} </p> 
+
+
+        {%endfor%} -->
       </div>
     </div>
   </div>
