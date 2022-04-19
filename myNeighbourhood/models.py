@@ -31,6 +31,8 @@ class NeighbourHood(models.Model):
     def members_count(cls):
         return cls.id.count()
 
+   
+
 class Profile(models.Model):
     username = models.OneToOneField(User, on_delete=models.CASCADE, default=0, related_name='profile')
     # username = models.CharField(max_length=20)
